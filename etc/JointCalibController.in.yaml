@@ -1,0 +1,108 @@
+---
+# If true, the FSM transitions are managed by an external tool
+Managed: false
+# If true and the FSM is self-managed, transitions should be triggered
+StepByStep: false
+# Change idle behaviour, if true the state is kept until transition,
+# otherwise the FSM holds the last state until transition
+IdleKeepState: true
+# Where to look for state libraries
+StatesLibraries:
+- "@MC_STATES_DEFAULT_RUNTIME_INSTALL_PREFIX@"
+- "@MC_STATES_RUNTIME_INSTALL_PREFIX@"
+- "@MC_CONTROLLER_INSTALL_PREFIX@/WalkerPolicy/states"
+
+# Where to look for state files
+StatesFiles:
+- "@MC_STATES_DEFAULT_RUNTIME_INSTALL_PREFIX@/data"
+- "@MC_STATES_RUNTIME_INSTALL_PREFIX@/data"
+# If true, state factory will be more verbose
+VerboseStateFactory: false
+
+# Additional robots to load
+robots:
+  ground:
+    module: env/ground
+robot_models: []
+contacts: []
+
+# Some options for a specific robot
+hrp5_p:
+  posture:
+    stiffness: 1000
+    weight: 1
+
+# Implement some additional text states
+states:
+  Initialize:
+    base: MetaTasks
+    tasks:
+      InitialTask:
+        type: posture
+        stiffness: 1.0
+        weight: 1.0
+
+  HalfSittingState:
+    base: HalfSitting
+    constraints:
+      KinConstraint:
+        type: kinematics
+        damper: [0.1, 0.01, 0.5]
+        velocityPercent: 0.2
+
+  JointCalibState:
+    base: JointCalib
+    hrp5_p:
+      # activeMotors: ["RAP", "LAP"]
+      # motorPGains: [80, 80]
+      # motorDGains: [8, 8]
+      # qLimitLower: [-70, -70]
+      # qLimitUpper: [-5, -5]
+
+      activeMotors: ["RAR", "LAR"]
+      motorPGains: [80, 80]
+      motorDGains: [8, 8]
+      qLimitLower: [-35, -35]
+      qLimitUpper: [35, 35]
+
+      # activeMotors: ["RKP", "LKP"]
+      # motorPGains: [150, 150]
+      # motorDGains: [15, 15]
+      # qLimitLower: [30, 30]
+      # qLimitUpper: [80, 80]
+
+      periodSeconds: 1.5
+      numCycles: 10
+
+  JointModPDState:
+    base: ModifyGains
+    duration: 1
+    hrp5_p:
+      # activeMotors: ["RAP", "LAP"]
+      activeMotors: ["RAR", "LAR"]
+      motorPGains: [80, 80]
+      motorDGains: [8, 8]
+      # activeMotors: ["RAR", "LAR"]
+      # activeMotors: ["RKP", "LKP"]
+      # motorPGains: [150, 150]
+      # motorDGains: [15, 15]
+
+# Transitions map
+transitions:
+- [Initialize, OK, HalfSittingState, Auto]
+- [HalfSittingState, OK, JointModPDState, Auto]
+- [JointModPDState, OK, JointCalibState, Auto]
+
+# Initial state
+init: Initialize
+
+ObserverPipelines:
+- name: CoMObservation
+  gui: true
+  observers:
+    - type: Encoder
+      config:
+        velocity: encoderVelocities
+    - type: Attitude
+    - type: BodySensor
+      update: false
