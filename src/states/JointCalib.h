@@ -46,7 +46,7 @@ private:
   /**
    * Number of timesteps in each cycle (controls motion speed).
    */
-  double cycle_period_s_ = 1.0;
+  std::vector<double> cycle_periods_s_ = {10};
   /**
    * Number of cycles before deactivating.
    */
@@ -65,4 +65,7 @@ private:
 
   // Counter for run iterations
   int iterCounter_ = 0;
+
+  // Counter for cycles
+  int cycleCounter_ = 0;
 };

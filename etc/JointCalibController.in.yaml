@@ -71,8 +71,8 @@ states:
       # qLimitLower: [30, 30]
       # qLimitUpper: [80, 80]
 
-      periodSeconds: 1.5
-      numCycles: 10
+      periodSeconds: [1.5, 2, 4, 8]
+      numCycles: 2
 
   JointModPDState:
     base: ModifyGains

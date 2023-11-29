@@ -51,7 +51,7 @@ void JointCalib::start(mc_control::fsm::Controller & ctl)
   robot_config_("motorDGains", motor_kds_);
   robot_config_("qLimitLower", qlim_lower_);
   robot_config_("qLimitUpper", qlim_upper_);
-  robot_config_("periodSeconds", cycle_period_s_);
+  robot_config_("periodSeconds", cycle_periods_s_);
   robot_config_("numCycles", num_cycles_);
 
   // simple sanity check to make sure qlimits don't exceed module defined limits
@@ -123,10 +123,10 @@ bool JointCalib::run(mc_control::fsm::Controller & ctl)
   if(active_)
   {
     std::vector<double> target;
-    // add fixed offsets to policy predictions
+    // compute the target joint position
     for(unsigned int i = 0; i < active_motors_.size(); i++)
     {
-      int cycle_period = cycle_period_s_/ctl.timeStep;
+      int cycle_period = cycle_periods_s_[cycleCounter_]/ctl.timeStep;
       double range = (qlim_upper_[i] - qlim_lower_[i]);
       double mid_pt = qlim_lower_[i] + range/2;
       double t = sin(2 * PI * iterCounter_ / cycle_period);
@@ -165,8 +165,16 @@ bool JointCalib::run(mc_control::fsm::Controller & ctl)
     ctl.datastore().assign(datastoreName_, control_msg);
   }
 
-  // deactivate after num_cycles_
-  if((iterCounter_*ctl.timeStep) >= (num_cycles_*cycle_period_s_))
+  // move to next cycle after num_cycles_
+  if((iterCounter_*ctl.timeStep) >= (num_cycles_*cycle_periods_s_[cycleCounter_]))
+  {
+    cycleCounter_++;
+    iterCounter_ = 0;
+    mc_rtc::log::success("[{}] Completed cycle {}.", name(), cycleCounter_);
+  }
+
+  // deactivate after all cycles
+  if(cycleCounter_ >= cycle_periods_s_.size())
   {
     active_ = false;
     mc_rtc::log::success("[{}] Completed (iterations = {}).", name(), iterCounter_);
