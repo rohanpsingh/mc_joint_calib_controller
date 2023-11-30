@@ -71,11 +71,23 @@ states:
   JointCalibState:
     base: JointCalib
     hrp5_p:
-      activeMotors: ["RCR", "LCR"]
-      motorPGains: [150, 150]
-      motorDGains: [15, 15]
-      qLimitLower: [-30, -30]
-      qLimitUpper: [30, 30]
+      activeMotors: ["RCY", "LCY"]
+      motorPGains: [200, 200]
+      motorDGains: [20, 20]
+      qLimitLower: [-20, -20]
+      qLimitUpper: [20, 20]
+
+      # activeMotors: ["RCR", "LCR"]
+      # motorPGains: [150, 150]
+      # motorDGains: [15, 15]
+      # qLimitLower: [-30, -30]
+      # qLimitUpper: [30, 30]
+
+      # activeMotors: ["RCP", "LCP"]
+      # motorPGains: [200, 200]
+      # motorDGains: [20, 20]
+      # qLimitLower: [-50, -50]
+      # qLimitUpper: [20, 20]
 
       # activeMotors: ["RKP", "LKP"]
       # motorPGains: [150, 150]
@@ -102,9 +114,14 @@ states:
     base: ModifyGains
     duration: 1
     hrp5_p:
-      activeMotors: ["RCR", "LCR"]
-      motorPGains: [150, 150]
-      motorDGains: [15, 15]
+      # activeMotors: ["RCP", "LCP"]
+      activeMotors: ["RCY", "LCY"]
+      motorPGains: [200, 200]
+      motorDGains: [20, 20]
+
+      # activeMotors: ["RCR", "LCR"]
+      # motorPGains: [150, 150]
+      # motorDGains: [15, 15]
       # activeMotors: ["RKP", "LKP"]
       # activeMotors: ["RAP", "LAP"]
       # activeMotors: ["RAR", "LAR"]
@@ -114,8 +131,9 @@ states:
 # Transitions map
 transitions:
 - [Initialize, OK, HalfSittingState, Auto]
-- [HalfSittingState, OK, UpdatePostureState, Auto]
-- [UpdatePostureState, OK, JointModPDState, Auto]
+#- [HalfSittingState, OK, UpdatePostureState, Auto]
+#- [UpdatePostureState, OK, JointModPDState, Auto]
+- [HalfSittingState, OK, JointModPDState, Auto]
 - [JointModPDState, OK, JointCalibState, Auto]
 
 # Initial state
