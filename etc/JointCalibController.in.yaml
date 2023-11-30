@@ -50,26 +50,50 @@ states:
         damper: [0.1, 0.01, 0.5]
         velocityPercent: 0.2
 
+  UpdatePostureState:
+    base: MetaTasks
+    constraints:
+      KinConstraint:
+        type: kinematics
+        damper: [0.1, 0.01, 0.5]
+        velocityPercent: 0.02
+    tasks:
+      posture:
+        type: posture
+        stiffness: 50.
+        weight: 100.
+        target:
+          RCP: [-0.3]
+          LCP: [0.3]
+        completion:
+          timeout: 5
+
   JointCalibState:
     base: JointCalib
     hrp5_p:
-      # activeMotors: ["RAP", "LAP"]
-      # motorPGains: [80, 80]
-      # motorDGains: [8, 8]
-      # qLimitLower: [-70, -70]
-      # qLimitUpper: [-5, -5]
-
-      activeMotors: ["RAR", "LAR"]
-      motorPGains: [80, 80]
-      motorDGains: [8, 8]
-      qLimitLower: [-35, -35]
-      qLimitUpper: [35, 35]
+      activeMotors: ["RCR", "LCR"]
+      motorPGains: [150, 150]
+      motorDGains: [15, 15]
+      qLimitLower: [-30, -30]
+      qLimitUpper: [30, 30]
 
       # activeMotors: ["RKP", "LKP"]
       # motorPGains: [150, 150]
       # motorDGains: [15, 15]
       # qLimitLower: [30, 30]
       # qLimitUpper: [80, 80]
+
+      # activeMotors: ["RAP", "LAP"]
+      # motorPGains: [80, 80]
+      # motorDGains: [8, 8]
+      # qLimitLower: [-70, -70]
+      # qLimitUpper: [-5, -5]
+
+      # activeMotors: ["RAR", "LAR"]
+      # motorPGains: [80, 80]
+      # motorDGains: [8, 8]
+      # qLimitLower: [-35, -35]
+      # qLimitUpper: [35, 35]
 
       periodSeconds: [1.5, 2, 4, 8]
       numCycles: 2
@@ -78,19 +102,20 @@ states:
     base: ModifyGains
     duration: 1
     hrp5_p:
-      # activeMotors: ["RAP", "LAP"]
-      activeMotors: ["RAR", "LAR"]
-      motorPGains: [80, 80]
-      motorDGains: [8, 8]
-      # activeMotors: ["RAR", "LAR"]
+      activeMotors: ["RCR", "LCR"]
+      motorPGains: [150, 150]
+      motorDGains: [15, 15]
       # activeMotors: ["RKP", "LKP"]
-      # motorPGains: [150, 150]
-      # motorDGains: [15, 15]
+      # activeMotors: ["RAP", "LAP"]
+      # activeMotors: ["RAR", "LAR"]
+      # motorPGains: [80, 80]
+      # motorDGains: [8, 8]
 
 # Transitions map
 transitions:
 - [Initialize, OK, HalfSittingState, Auto]
-- [HalfSittingState, OK, JointModPDState, Auto]
+- [HalfSittingState, OK, UpdatePostureState, Auto]
+- [UpdatePostureState, OK, JointModPDState, Auto]
 - [JointModPDState, OK, JointCalibState, Auto]
 
 # Initial state
