@@ -20,9 +20,6 @@ StatesFiles:
 VerboseStateFactory: false
 
 # Additional robots to load
-robots:
-  ground:
-    module: env/ground
 robot_models: []
 contacts: []
 
