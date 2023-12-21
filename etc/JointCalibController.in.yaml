@@ -28,6 +28,10 @@ hrp5_p:
   posture:
     stiffness: 1000
     weight: 1
+hrp4cr:
+  posture:
+    stiffness: 1000
+    weight: 1
 
 # Implement some additional text states
 states:
@@ -107,6 +111,16 @@ states:
       periodSeconds: [1.5, 2, 4, 8]
       numCycles: 2
 
+    hrp4cr:
+      activeMotors: ["R_ANKLE_P", "L_ANKLE_P"]
+      motorPGains: [40, 40]
+      motorDGains: [4, 4]
+      qLimitLower: [-50, -50]
+      qLimitUpper: [5, 5]
+
+      periodSeconds: [1.5, 2, 4, 8]
+      numCycles: 2
+
   JointModPDState:
     base: ModifyGains
     duration: 1
@@ -124,6 +138,11 @@ states:
       # activeMotors: ["RAR", "LAR"]
       # motorPGains: [80, 80]
       # motorDGains: [8, 8]
+
+    hrp4cr:
+      activeMotors: ["R_ANKLE_P", "L_ANKLE_P"]
+      motorPGains: [40, 40]
+      motorDGains: [4, 4]
 
 # Transitions map
 transitions:
