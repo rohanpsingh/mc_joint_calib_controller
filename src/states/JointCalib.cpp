@@ -63,13 +63,15 @@ void JointCalib::start(mc_control::fsm::Controller & ctl)
       int mbc_id = ctl.robot().jointIndexByName(active_motors_[i]);
       double ql = ctl.robot().ql()[mbc_id][0] * 180 / PI;
       double qu = ctl.robot().qu()[mbc_id][0] * 180 / PI;
-      if(qlim_lower_[i] < ql)
+      if((qlim_lower_[i] < ql) || (qlim_lower_[i] > qu))
       {
-	qlim_lower_[i] = ql;
+	mc_rtc::log::error_and_throw<std::runtime_error>(
+	    "[{}] qlim_lower_ ({}) is outside joint range ({}, {}) for joint {}.", name(), qlim_lower_[i], ql, qu, active_motors_[i]);
       }
-      if(qlim_upper_[i] > qu)
+      if((qlim_upper_[i] < ql) || (qlim_upper_[i] > qu))
       {
-	qlim_upper_[i] = qu;
+	mc_rtc::log::error_and_throw<std::runtime_error>(
+            "[{}] qlim_upper_ ({}) is outside joint range ({}, {}) for joint {}.", name(), qlim_upper_[i], ql, qu, active_motors_[i]);
       }
     }
   }
