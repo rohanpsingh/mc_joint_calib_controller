@@ -112,11 +112,17 @@ states:
       numCycles: 2
 
     hrp4cr:
-      activeMotors: ["R_ANKLE_P", "L_ANKLE_P"]
-      motorPGains: [40, 40]
-      motorDGains: [4, 4]
-      qLimitLower: [-50, -50]
-      qLimitUpper: [5, 5]
+      # activeMotors: ["R_ANKLE_P", "L_ANKLE_P"]
+      # motorPGains: [40, 40]
+      # motorDGains: [4, 4]
+      # qLimitLower: [-35, -35]
+      # qLimitUpper: [5, 5]
+
+      activeMotors: ["R_KNEE_P", "L_KNEE_P"]
+      motorPGains: [150, 150]
+      motorDGains: [15, 15]
+      qLimitLower: [20, 20]
+      qLimitUpper: [80, 80]
 
       periodSeconds: [1.5, 2, 4, 8]
       numCycles: 2
@@ -140,9 +146,13 @@ states:
       # motorDGains: [8, 8]
 
     hrp4cr:
-      activeMotors: ["R_ANKLE_P", "L_ANKLE_P"]
-      motorPGains: [40, 40]
-      motorDGains: [4, 4]
+      # activeMotors: ["R_ANKLE_P", "L_ANKLE_P"]
+      # motorPGains: [40, 40]
+      # motorDGains: [4, 4]
+
+      activeMotors: ["R_KNEE_P", "L_KNEE_P"]
+      motorPGains: [150, 150]
+      motorDGains: [15, 15]
 
 # Transitions map
 transitions:
