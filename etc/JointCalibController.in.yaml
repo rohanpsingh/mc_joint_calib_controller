@@ -113,40 +113,40 @@ states:
 
     hrp4cr:
       # activeMotors: ["R_HIP_Y", "L_HIP_Y"]
-      # motorPGains: [200, 200]
-      # motorDGains: [5.5, 5.5]
+      # motorPGains: [100, 100]
+      # motorDGains: [10, 10]
       # qLimitLower: [-20, -20]
       # qLimitUpper: [20, 20]
 
-      activeMotors: ["R_HIP_R", "L_HIP_R"]
-      motorPGains: [200, 200]
-      motorDGains: [20, 20]
-      qLimitLower: [-20, -20]
-      qLimitUpper: [20, 20]
+      # activeMotors: ["R_HIP_R", "L_HIP_R"]
+      # motorPGains: [100, 100]
+      # motorDGains: [10, 10]
+      # qLimitLower: [-20, -20]
+      # qLimitUpper: [20, 20]
 
       # activeMotors: ["R_HIP_P", "L_HIP_P"]
-      # motorPGains: [300, 300]
-      # motorDGains: [30, 30]
+      # motorPGains: [100, 100]
+      # motorDGains: [10, 10]
       # qLimitLower: [-50, -50]
       # qLimitUpper: [10, 10]
+
+      # activeMotors: ["R_KNEE_P", "L_KNEE_P"]
+      # motorPGains: [200, 200]
+      # motorDGains: [20, 20]
+      # qLimitLower: [20, 20]
+      # qLimitUpper: [80, 80]
+
+      activeMotors: ["R_ANKLE_P", "L_ANKLE_P"]
+      motorPGains: [80, 80]
+      motorDGains: [8, 8]
+      qLimitLower: [-50, -50]
+      qLimitUpper: [10, 10]
 
       # activeMotors: ["R_ANKLE_R", "L_ANKLE_R"]
       # motorPGains: [80, 80]
       # motorDGains: [8, 8]
       # qLimitLower: [-30, -30]
       # qLimitUpper: [30, 30]
-
-      # activeMotors: ["R_ANKLE_P", "L_ANKLE_P"]
-      # motorPGains: [80, 80]
-      # motorDGains: [8, 8]
-      # qLimitLower: [-35, -35]
-      # qLimitUpper: [5, 5]
-
-      # activeMotors: ["R_KNEE_P", "L_KNEE_P"]
-      # motorPGains: [150, 150]
-      # motorDGains: [15, 15]
-      # qLimitLower: [20, 20]
-      # qLimitUpper: [80, 80]
 
       periodSeconds: [1.5, 2, 4, 8]
       numCycles: 2
@@ -171,28 +171,28 @@ states:
 
     hrp4cr:
       # activeMotors: ["R_HIP_Y", "L_HIP_Y"]
-      # motorPGains: [200, 200]
-      # motorDGains: [5.5, 5.5]
+      # motorPGains: [100, 100]
+      # motorDGains: [10, 10]
 
-      activeMotors: ["R_HIP_R", "L_HIP_R"]
-      motorPGains: [200, 200]
-      motorDGains: [20, 20]
+      # activeMotors: ["R_HIP_R", "L_HIP_R"]
+      # motorPGains: [100, 100]
+      # motorDGains: [10, 10]
 
       # activeMotors: ["R_HIP_P", "L_HIP_P"]
-      # motorPGains: [300, 300]
-      # motorDGains: [30, 30]
+      # motorPGains: [100, 100]
+      # motorDGains: [10, 10]
+
+      # activeMotors: ["R_KNEE_P", "L_KNEE_P"]
+      # motorPGains: [200, 200]
+      # motorDGains: [20, 20]
+
+      activeMotors: ["R_ANKLE_P", "L_ANKLE_P"]
+      motorPGains: [80, 80]
+      motorDGains: [8, 8]
 
       # activeMotors: ["R_ANKLE_R", "L_ANKLE_R"]
       # motorPGains: [80, 80]
       # motorDGains: [8, 8]
-
-      # activeMotors: ["R_ANKLE_P", "L_ANKLE_P"]
-      # motorPGains: [80, 80]
-      # motorDGains: [8, 8]
-
-      # activeMotors: ["R_KNEE_P", "L_KNEE_P"]
-      # motorPGains: [150, 150]
-      # motorDGains: [15, 15]
 
 # Transitions map
 transitions:
